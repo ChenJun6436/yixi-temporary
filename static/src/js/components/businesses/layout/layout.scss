@@ -1,0 +1,49 @@
+.main-box{
+  padding-left: 20px;
+  padding-right: 20px;
+
+}
+.aside{
+  height: 50px;
+  background: url("../images/header-profile.png") repeat-x;
+  .asideListFirst{
+    border-radius: 0;
+    background: url("../images/header-profile.png") repeat-x;
+    color: #f7f7f7;
+  }
+  .asideListSecondUl{
+    @extend .asideListFirst;
+    color: #f7f7f7;
+    .asideListSecond{
+      a{
+        color: #f7f7f7;
+      }
+      a:hover{
+        color: #ffffff;
+        background: url("../images/header-profile.png") repeat-x;
+      }
+    }
+  }
+  .asideListSecondUl:hover{
+    background: url("../images/header-profile.png") repeat-x;
+  }
+  .asideListFirst:hover{
+    background: #777777;
+  }
+  .asideListActive {
+    background-color: #ff3333;
+  }
+  .hidden-xs {
+    a{
+      @extend .h50;
+      @extend .lh50;
+      //@extend .fw;
+      color: #f7f7f7;
+      padding: 0 20px;
+      i{
+        font-weight: normal;
+      }
+    }
+    a:hover {background-color: #777777}
+  }
+}

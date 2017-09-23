@@ -298,9 +298,14 @@ option[value="?"]{
 .ng-table th.sortable .sort-indicator {
 	display: inline-block;
 }
-.user-login{
-	    width: 400px;
-	    position: absolute;
-	    left: 50%;
-	    margin-left: -200px;
-	}
+
+.bor-b{
+	border-bottom: 1px solid;
+}
+a{color:#676a6c; text-decoration:none;}
+a:visited {text-decoration:none;}
+a:hover {color:#676a6c;text-decoration:underline;}
+a:active {color:#676a6c;}
+body{
+	color: #676a6c;
+}

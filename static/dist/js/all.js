@@ -23,10 +23,6 @@
     'use strict';
     angular.module('app.jun', ['app.core']);
 })();
-(function() {
-    'use strict';
-    angular.module('app.login', ['app.core']);
-})();
 /**
  * @Author: chenjun
  * @Date:   2017-09-21
@@ -36,6 +32,10 @@
 
     angular.module('app.layout', ['app.core']);
 
+})();
+(function() {
+    'use strict';
+    angular.module('app.login', ['app.core']);
 })();
 /**
  * @Author: chenjun
@@ -165,70 +165,6 @@
         console.log($rootScope.userRole);
     }
 })();
-(function() {
-    'use strict';
-    angular.module('app.login').run(appRun);
-    appRun.$inject = ['routerHelper'];
-    function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
-    }
-
-    function getStates() {
-        return [{
-            state: 'login',
-            config: {
-                url: '/login',
-                templateUrl: 'static/dist/tpls/components/businesses/login/login.html',
-                controller: 'loginController'
-            }
-        }];
-    }
-})();
-/*author：chenjun 17.9.20*/
-(function () {
-    'use strict';
-    angular.module('app.login').controller('loginController', loginController);
-    loginController.$inject = [
-        '$scope',
-        '$rootScope',
-        '$cookies',
-        '$state'
-    ];
-    function loginController($scope, $rootScope, $cookies, $state) {
-        $scope.vm = {
-            user: {},
-            loginErrorMessage: '这是一条错误警告'
-        };
-        $cookies.remove('user');
-        $scope.vm.login = function () {
-            //验证表单
-            if($scope.vm.longinForm.$valid){
-                $cookies.putObject('user', {
-                    name: $scope.vm.user.userName,
-                    pwd: $scope.vm.user.passWords
-                });
-                console.log($cookies.getObject('user'))
-                // $state.go('main');
-            }
-            /*发送登录请求*/
-            // commonService.postLogin().then(function(res){
-            //     if(res){
-            //         console.log('成功登录')
-            //         $state.go('main');
-            //         $cookies.putObject('user', {
-            //             name: $scope.vm.user.userName,
-            //             pwd: $scope.vm.user.passWords
-            //         });
-            //         $rootScope.user_Name = $cookies.getObject('user').role;
-            //         $rootScope.user_Token = $cookies.getObject('user').name;
-            //     }else if(res.aa){
-            //         console.log('登录失败')
-            //     }
-            // })
-
-        };
-    }
-})();
 /**
  * @Author: chenjun
  * @Date:   2017-09-21
@@ -244,8 +180,19 @@
         '$state'
     ];
     function asideController($scope, $rootScope, $cookies, $state) {
-        $scope.state = $state;
+        $scope.vm = {}
+        $scope.state = $state
+        //获取用户操作菜单
+        $scope.vm.getUserList = function () {
+            //发送请求
+            $scope.vm.userListFirst = ['管理首页','系统设置','用户管理','通道管理','订单管理','提款管理','文章管理']
+            $scope.vm.userListSecond = ['基本设置','邮件设置','系统更新']
+        }
+        $scope.vm.getUserList()
         // 显示 导航栏点击显示
+        $scope.vm.chooseFirst = function (index1) {
+            $scope.vm.chooseFirstOne = index1
+        }
         $scope.daohanglanClick = function (num) {
             if( $scope.daohanglan === num){
                 $scope.daohanglan = 0
@@ -253,6 +200,7 @@
                 $scope.daohanglan = num
             }
         }
+
         // console.log($state)
     }
 })();
@@ -297,26 +245,23 @@
                     url: '/main',
                     views: {
                         '': {
-                            templateUrl: 'static/dist/tpls/components/businesses/subject/main.html'
+                            templateUrl: 'static/dist/tpls/components/businesses/layout/main.html'
                         },
                         'header@main': {
-                            templateUrl: 'static/dist/tpls/components/businesses/subject/header.html',
+                            templateUrl: 'static/dist/tpls/components/businesses/layout/header.html',
                             controller: 'headerController'
                         },
                         'aside@main': {
-                            templateUrl: 'static/dist/tpls/components/businesses/subject/aside.html',
+                            templateUrl: 'static/dist/tpls/components/businesses/layout/aside.html',
                             controller: 'asideController'
                         },
                         'section@main': {
                             controller: ['$state', '$rootScope', function ($state, $rootScope) {
                                 //根据角色不同判断默认显示的初始化页面
-                                if ($rootScope.userRole === 1) {
-                                    console.log('qu chen');
-                                    $state.go('main.chen');
-                                } else if ($rootScope.userRole === 2) {
-                                    console.log('qu jun');
-                                    $state.go('main.jun');
-                                }
+                                // if ($rootScope.userName) {
+                                //     console.log('qu chen');
+                                //     $state.go('main.chen');
+                                // }
                             }]
                         }
                     }
@@ -326,6 +271,89 @@
     }
 })();
 
+(function() {
+    'use strict';
+    angular.module('app.login').run(appRun);
+    appRun.$inject = ['routerHelper'];
+    function appRun(routerHelper) {
+        routerHelper.configureStates(getStates());
+    }
+
+    function getStates() {
+        return [{
+            state: 'login',
+            config: {
+                url: '/login',
+                templateUrl: 'static/dist/tpls/components/businesses/login/login.html',
+                controller: 'loginController'
+            }
+        }];
+    }
+})();
+/*author：chenjun 17.9.20*/
+(function () {
+    'use strict';
+    angular.module('app.login').controller('loginController', loginController);
+    loginController.$inject = [
+        '$scope',
+        '$rootScope',
+        '$cookies',
+        '$state'
+    ];
+    function loginController($scope, $rootScope, $cookies, $state) {
+        $scope.vm = {
+            user: {},
+            canClick: false,
+            loginErrorTitle: '账号认证不通过',
+            loginErrorMessage: '请联系管理员开通'
+        };
+        //开发
+        // $cookies.remove('user');
+        //
+        $('#loginButton').on('click', function () {
+            $scope.vm.loginSubmit = true;
+            var $btn = $(this).button('loading')
+            if($scope.vm.longinForm.$valid){
+                $cookies.remove('user');
+                $cookies.putObject('user', {
+                    name: $scope.vm.user.userName,
+                    pwd: $scope.vm.user.passWords
+                });
+                console.log($cookies.getObject('user'))
+                if($cookies.getObject('user').name == '1'){
+                    $scope.vm.loginError = true
+                    $scope.vm.closeLoginError = function () {
+                        $scope.vm.loginError = false
+                        $btn.button('reset')
+                    }
+                }else {
+                    $rootScope.userName = $cookies.getObject('user').name;
+                    $state.go('main');
+                }
+            }else {
+                $btn.button('reset')
+            }
+        })
+        // $scope.vm.login = function () {
+            //验证表单
+            /*发送登录请求*/
+            // commonService.postLogin().then(function(res){
+            //     if(res){
+            //         console.log('成功登录')
+            //         $state.go('main');
+            //         $cookies.putObject('user', {
+            //             name: $scope.vm.user.userName,
+            //             pwd: $scope.vm.user.passWords
+            //         });
+            //         $rootScope.user_Name = $cookies.getObject('user').role;
+            //         $rootScope.user_Token = $cookies.getObject('user').name;
+            //     }else if(res.aa){
+            //         console.log('登录失败')
+            //     }
+            // })
+        // };
+    }
+})();
 /**
  * @Author: chenjun
  * @Date:   2017-09-21
@@ -767,7 +795,7 @@
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             $rootScope.clearPending();
             $rootScope.alert = false;
-            console.log($rootScope.userRole);
+            console.log("********************");
             //页面权限控制，防止交叉访问
             //不是登陆页面
             if (toState.name !== 'login') {
@@ -776,22 +804,9 @@
                     'main'
                 ];
                 //用户判断去哪个页面,特定用户添加router
-                switch ($rootScope.userRole) {
-                    case 1:
-                        premissionArr = premissionArr.concat([
-                            'main.chen',
-                        ]);
-                        console.log('qqqqqqqqqqqqqqqqqqqqqchen')
-                        console.log(premissionArr)
-                        break;
-                    case 2:
-                        premissionArr = premissionArr.concat([
-                            'main.jun',
-                        ]);
-                        break;
-                    default:
-                        $state.go('main');
-                }
+                premissionArr = premissionArr.concat([
+                    'main.chen',
+                ]);
                 //如果在路由集合中找不到  输入的地址或者即将跳转的地址，那么就去主页
                 if (premissionArr.indexOf(toState.name) === -1) {
                     event.preventDefault();

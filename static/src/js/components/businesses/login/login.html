@@ -1,16 +1,23 @@
-<div clas='login container-fluid' style='height: 100%; background: url("./static/dist/images/paybg.jpg") top center no-repeat;'>
-    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+<div class='login'>
+    <nav class="navbar navbar-default m0">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>
+                <a class="navbar-brand" href="javaScript:;"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a>
             </div>
         </div>
     </nav>
-    <div class="login-box container" style="color: #fff;height: 400px;overflow: hidden;top:20%">  
+    <div class="login-box" style="">
 	    <div class="user-login">
 	        <h3 class="text-center">奕希支付-后台管理系统</h3>
 	        <form name="vm.longinForm" novalidate>
-                <div class="alert alert-danger" role="alert" style="padding: 8px;margin-bottom: 10px;">{{vm.loginErrorMessage}}</div>
+                <div class="alert alert-danger alert-dismissible fade in" role="alert" id="loginError"
+                    ng-show="vm.loginError">
+                    <button type="button" class="close"  ng-click="vm.closeLoginError()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4>{{vm.loginErrorTitle}}</h4>
+                    <p>{{vm.loginErrorMessage}}</p>
+                </div>
 			    <div class="form-group">
 			        <label for="userName">用户名</label>
 			        <input type="text" class="form-control" id="userName" placeholder="Name" name="userName"
@@ -26,9 +33,8 @@
                         required>
                     <span class="text-error"
                         ng-if="vm.longinForm.userPwd.$invalid&&vm.loginSubmit">必填*</span>
-			  </div>
-			  <input type="button" class="btn btn-primary w100 h50" value='登录'
-			  		ng-click="vm.login()">
+			    </div>
+                <button type="button" id="loginButton" data-loading-text="Loading..." class="btn btn-primary w100 h50" autocomplete="off" ng-click="vm.login()">登录</button>
 			</form>
 	    </div>
     </div>
@@ -36,15 +42,7 @@
         <div class="container">
             <h4 class="text-center">合作伙伴</h4>  <!-- 合作伙伴 -->
             <div class="row bank-list">
-                <div class="bank-item"><span class="bank-logo" id="BANK_ICBC" style="background-image: url(./static/dist/images/bank-logo.min.png);
-		    background-repeat: no-repeat;
-		    display: block;
-		    width: 125px;
-		    height: 28px;
-		    overflow: hidden;
-		    text-indent: -9999px;
-		    float: left;
-		    cursor: pointer;">X</span></div>
+                <div class="bank-item"><span class="bank-logo" id="BANK_ICBC">X</span></div>
                 <div class="bank-item"><span class="bank-logo" id="BANK_ABC">X</span></div>
                 <div class="bank-item"><span class="bank-logo" id="BANK_BOC">X</span></div>
                 <div class="bank-item"><span class="bank-logo" id="BANK_CBHB">X</span></div>
@@ -62,7 +60,7 @@
         </div>
     </div>
     <div class="copyright">
-        <div class="container">
+        <div class="container w100">
             <div class="row">
                 <div class="col-sm-12">
                     <span>Copyright©2016-2017 All Rights Reserved</span>
