@@ -5,6 +5,7 @@
     'use strict';
     angular.module('app.core', [
         'app.helper',
-        'ngCookies'
+        'ngCookies',
+        'ngTable'
     ]);
 })();

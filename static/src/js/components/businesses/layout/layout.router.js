@@ -35,10 +35,7 @@
                         'section@main': {
                             controller: ['$state', '$rootScope', function ($state, $rootScope) {
                                 //根据角色不同判断默认显示的初始化页面
-                                // if ($rootScope.userName) {
-                                //     console.log('qu chen');
-                                //     $state.go('main.chen');
-                                // }
+
                             }]
                         }
                     }

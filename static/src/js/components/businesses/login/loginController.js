@@ -36,7 +36,7 @@
                     }
                 }else {
                     $rootScope.userName = $cookies.getObject('user').name;
-                    $state.go('main');
+                    $state.go('main.authorityManagement');
                 }
             }else {
                 $btn.button('reset')

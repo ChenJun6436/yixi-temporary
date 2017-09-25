@@ -298,9 +298,31 @@ option[value="?"]{
 .ng-table th.sortable .sort-indicator {
 	display: inline-block;
 }
+.table>tbody>tr{
 
+}
+.table>tbody>tr>td{
+	padding: 10px;
+	vertical-align: middle;
+	border-bottom: 1px solid #e2e2e2;
+}
+.ng-table-sort-header th{
+	background-color: #e0e0e0;
+	height: 50px;
+}
+
+//这是总条数  总共*条
+.ng-isolate-scope{
+	height: 35px;
+}
 .bor-b{
 	border-bottom: 1px solid;
+}
+.mr5{
+	margin-right: 5px;
+}
+.fwN{
+	font-weight: normal;
 }
 a{color:#676a6c; text-decoration:none;}
 a:visited {text-decoration:none;}
@@ -308,4 +330,7 @@ a:hover {color:#676a6c;text-decoration:underline;}
 a:active {color:#676a6c;}
 body{
 	color: #676a6c;
+}
+.smallModal{
+	width: 600px;
 }

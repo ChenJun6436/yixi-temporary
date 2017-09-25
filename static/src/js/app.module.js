@@ -10,6 +10,7 @@
         'app.layout',
         'app.login',
         'app.chen',
-        'app.jun'
+        'app.jun',
+        'app.userManagement'
     ]);
 })();

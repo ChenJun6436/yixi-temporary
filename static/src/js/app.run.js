@@ -11,12 +11,12 @@
     function appRun($rootScope, $cookies, $state, $http) {
         //改变全局  需要引入moment.JS 时间处理类库  这里是上下午zh-cn
         // moment.locale('zh-cn')
-        if ($cookies.getObject('user')) {
-            $rootScope.userRole = $cookies.getObject('user').role;
-            $rootScope.userName = $cookies.getObject('user').name;
-            console.log($rootScope.userRole +""+"这是启动的时候")
-        }
-        console.log($cookies.getObject('user')+""+"这是启动的时候 获取cookies")
+        // if ($cookies.getObject('user')) {
+        //     $rootScope.userRole = $cookies.getObject('user').role;
+        //     $rootScope.userName = $cookies.getObject('user').name;
+        //     console.log($rootScope.userRole +""+"这是启动的时候")
+        // }
+        // console.log($cookies.getObject('user')+""+"这是启动的时候 获取cookies")
         /**
          * 取消请求
          */
@@ -41,6 +41,9 @@
                 //用户判断去哪个页面,特定用户添加router
                 premissionArr = premissionArr.concat([
                     'main.chen',
+                    'main.authorityManagement',
+                    'main.roleManagement',
+                    'main.userManagement'
                 ]);
                 //如果在路由集合中找不到  输入的地址或者即将跳转的地址，那么就去主页
                 if (premissionArr.indexOf(toState.name) === -1) {

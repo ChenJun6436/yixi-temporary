@@ -12,7 +12,8 @@
     'use strict';
     angular.module('app.core', [
         'app.helper',
-        'ngCookies'
+        'ngCookies',
+        'ngTable'
     ]);
 })();
 (function() {
@@ -35,6 +36,10 @@
 })();
 (function() {
     'use strict';
+    angular.module('app.userManagement', ['app.core']);
+})();
+(function() {
+    'use strict';
     angular.module('app.login', ['app.core']);
 })();
 /**
@@ -49,7 +54,8 @@
         'app.layout',
         'app.login',
         'app.chen',
-        'app.jun'
+        'app.jun',
+        'app.userManagement'
     ]);
 })();
 (function () {
@@ -187,21 +193,49 @@
             //发送请求
             $scope.vm.userListFirst = ['管理首页','系统设置','用户管理','通道管理','订单管理','提款管理','文章管理']
             $scope.vm.userListSecond = ['基本设置','邮件设置','系统更新']
+            $scope.vm.navList = ['基本设置','111']
+            $scope.vm.nowChooseNav = 0
         }
         $scope.vm.getUserList()
         // 显示 导航栏点击显示
-        $scope.vm.chooseFirst = function (index1) {
-            $scope.vm.chooseFirstOne = index1
+        $scope.vm.chooseFirst = function (_index) {
+            $scope.vm.chooseFirstOne = _index
         }
-        $scope.daohanglanClick = function (num) {
-            if( $scope.daohanglan === num){
-                $scope.daohanglan = 0
+        // 显示 历史记录显示
+        $scope.vm.chooseNav = function (_index) {
+            $scope.vm.nowChooseNav = _index
+        }
+        // 历史Nav添加
+        $scope.vm.pushNavList = function (navName) {
+            if($scope.vm.navList.indexOf(navName)=== -1){
+                $scope.vm.navList.push(navName)
             }else {
-                $scope.daohanglan = num
+                console.log(navName)
             }
         }
-
-        // console.log($state)
+        // 历史Nav删除
+        $scope.vm.delNavList = function (_index) {
+            $scope.vm.navList.splice(_index,1)
+            if($scope.vm.navList.length === 0){
+                $scope.vm.navList.push('默认页面')
+            }
+        }
+        //vm.delNowChoose()">关闭当前选项卡
+        $scope.vm.delNowChoose = function () {
+            $scope.vm.navList.splice($scope.vm.nowChooseNav,1)
+            if($scope.vm.navList.length === 0){
+                $scope.vm.navList.push('默认页面')
+            }
+        }
+        //vm.delAllChoose()">关闭全部选项卡
+        $scope.vm.delAllChoose = function () {
+            $scope.vm.navList = []
+            $scope.vm.navList.push('默认页面')
+        }
+        //vm.delOtherChoose()">关闭其他选项卡
+        $scope.vm.delOtherChoose = function () {
+            $scope.vm.navList = [$scope.vm.navList[$scope.vm.nowChooseNav]]
+        }
     }
 })();
 
@@ -258,10 +292,7 @@
                         'section@main': {
                             controller: ['$state', '$rootScope', function ($state, $rootScope) {
                                 //根据角色不同判断默认显示的初始化页面
-                                // if ($rootScope.userName) {
-                                //     console.log('qu chen');
-                                //     $state.go('main.chen');
-                                // }
+
                             }]
                         }
                     }
@@ -271,6 +302,154 @@
     }
 })();
 
+(function() {
+
+    'use strict';
+
+    angular.module('app.userManagement').run(appRun);
+
+    appRun.$inject = ['routerHelper'];
+
+    function appRun(routerHelper) {
+        routerHelper.configureStates(getStates());
+    }
+
+    function getStates() {
+        console.log('wo s chen Router')
+        return [{
+            state: 'main.authorityManagement',
+            config: {
+                url: '/authorityManagement',
+                views: {
+                    'section@main': {
+                        templateUrl: 'static/dist/tpls/components/businesses/userManagement/authorityManagement.html',
+                        controller: 'authorityManagementController'
+                    }
+                }
+            }
+        },{
+            state: 'main.roleManagement',
+            config: {
+                url: '/roleManagement',
+                views: {
+                    'section@main': {
+                        templateUrl: 'static/dist/tpls/components/businesses/userManagement/roleManagement.html',
+                        controller: 'roleManagementController'
+                    }
+                }
+            }
+        },{
+            state: 'main.userManagement',
+            config: {
+                url: '/userManagement',
+                views: {
+                    'section@main': {
+                        templateUrl: 'static/dist/tpls/components/businesses/userManagement/userManagement.html',
+                        controller: 'userManagementController'
+                    }
+                }
+            }
+        }];
+    }
+})();
+(function () {
+
+    'use strict';
+
+    angular.module('app.userManagement').controller('authorityManagementController', authorityManagementController);
+
+    authorityManagementController.$inject = [
+        '$scope',
+        '$rootScope',
+        '$cookies',
+        '$state',
+        'NgTableParams'
+    ];
+
+    function authorityManagementController($scope, $rootScope, $cookies, $state, NgTableParams) {
+        $scope.vm = {};
+        $scope.vm.menuList = [
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+        ]
+        $scope.vm.tableParams = new NgTableParams(
+            { count: 100 },
+            { dataset: $scope.vm.menuList}
+        );
+    }
+})();
+(function () {
+
+    'use strict';
+
+    angular.module('app.userManagement').controller('roleManagementController', roleManagementController);
+
+    roleManagementController.$inject = [
+        '$scope',
+        '$rootScope',
+        '$cookies',
+        '$state',
+        'NgTableParams'
+    ];
+
+    function roleManagementController($scope, $rootScope, $cookies, $state, NgTableParams) {
+        $scope.vm = {};
+        $scope.vm.menuList = [
+            {'PK':1,'menuName':'超级管理员','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'一般管理员','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'一级代理','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'二级代理','parentName':'heihei','menuLevelName':'陈俊'},
+        ]
+        $scope.vm.tableParams = new NgTableParams(
+            { count: 100 },
+            { dataset: $scope.vm.menuList}
+        );
+    }
+})();
+(function () {
+
+    'use strict';
+
+    angular.module('app.userManagement').controller('userManagementController', userManagementController);
+
+    userManagementController.$inject = [
+        '$scope',
+        '$rootScope',
+        '$cookies',
+        '$state',
+        'NgTableParams'
+    ];
+
+    function userManagementController($scope, $rootScope, $cookies, $state, NgTableParams) {
+        $scope.vm = {};
+        //初始化时间插件
+        laydate.render({
+            elem: '#startTime', //指定元素
+            range: '~',
+            theme: '#524f4f'
+        });
+        $scope.vm.menuList = [
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+        ]
+        $scope.vm.tableParams = new NgTableParams(
+            { count: 100 },
+            { dataset: $scope.vm.menuList}
+        );
+        $scope.vm.showUserAuthentification = function () {
+            console.log(1)
+            $('#userAuthentification').modal('show')
+        }
+    }
+})();
 (function() {
     'use strict';
     angular.module('app.login').run(appRun);
@@ -328,7 +507,7 @@
                     }
                 }else {
                     $rootScope.userName = $cookies.getObject('user').name;
-                    $state.go('main');
+                    $state.go('main.authorityManagement');
                 }
             }else {
                 $btn.button('reset')
@@ -551,17 +730,6 @@
  * @Date:   2017-09-21
  */
 (function () {
-    'use strict';
-    /**
-     * 常量
-     */
-    angular.module('app.core').constant('ROOT', '');
-})();
-/**
- * @Author: chenjun
- * @Date:   2017-09-21
- */
-(function () {
     /**
      * 助学金辅导员服务
      */
@@ -583,6 +751,17 @@
     }
 })();
 
+/**
+ * @Author: chenjun
+ * @Date:   2017-09-21
+ */
+(function () {
+    'use strict';
+    /**
+     * 常量
+     */
+    angular.module('app.core').constant('ROOT', '');
+})();
 /**
  * @Author: chenjun
  * @Date:   2017-09-21
@@ -776,12 +955,12 @@
     function appRun($rootScope, $cookies, $state, $http) {
         //改变全局  需要引入moment.JS 时间处理类库  这里是上下午zh-cn
         // moment.locale('zh-cn')
-        if ($cookies.getObject('user')) {
-            $rootScope.userRole = $cookies.getObject('user').role;
-            $rootScope.userName = $cookies.getObject('user').name;
-            console.log($rootScope.userRole +""+"这是启动的时候")
-        }
-        console.log($cookies.getObject('user')+""+"这是启动的时候 获取cookies")
+        // if ($cookies.getObject('user')) {
+        //     $rootScope.userRole = $cookies.getObject('user').role;
+        //     $rootScope.userName = $cookies.getObject('user').name;
+        //     console.log($rootScope.userRole +""+"这是启动的时候")
+        // }
+        // console.log($cookies.getObject('user')+""+"这是启动的时候 获取cookies")
         /**
          * 取消请求
          */
@@ -806,6 +985,9 @@
                 //用户判断去哪个页面,特定用户添加router
                 premissionArr = premissionArr.concat([
                     'main.chen',
+                    'main.authorityManagement',
+                    'main.roleManagement',
+                    'main.userManagement'
                 ]);
                 //如果在路由集合中找不到  输入的地址或者即将跳转的地址，那么就去主页
                 if (premissionArr.indexOf(toState.name) === -1) {
