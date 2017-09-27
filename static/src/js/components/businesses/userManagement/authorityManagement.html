@@ -29,8 +29,7 @@
     </div>
 </div>
 <!--添加菜单-->
-<div class="modal fade modal-open" id="addMenu" tabindex="-1" role="dialog"
-     aria-labelledby="addGrantsModal">
+<div class="modal fade modal-open" id="addMenu" tabindex="-1" role="dialog" aria-labelledby="addGrantsModal" style="top:20%">
     <div class="modal-dialog smallModal" role="document">
         <div class="modal-content">
             <div class="modal-header h50">
@@ -75,29 +74,11 @@
                 </form>
             </div>
             <div class="modal-footer tc">
-                <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-default">取消
-                </button>
                 <button type="button" ng-click="vm.openScPublic()" class="btn btn-info">提交保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">取消</button>
             </div>
         </div>
     </div>
 </div>
 <!--删除-->
-<div class="modal fade modal-open" id="deleteMenu" tabindex="-1" role="dialog"
-     aria-labelledby="addGrantsModal" style="top:50%;margin-top: -200px">
-    <div class="modal-dialog" style="width:450px;" role="document">
-        <div class="modal-content">
-            <div class="modal-header h50">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title fs16 lh30" id="addGrantsModal">确认删除{{x}}</h4></div>
-            <div class="modal-body">
-                <p>确定要删除吗？</p>
-                <div class="text-center mt30">
-                    <button class="btn btn-primary">确定</button>
-                    <button class="btn btn-default ml20">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<alert-delete sure-delete="vm.sureDelete()"></alert-delete>

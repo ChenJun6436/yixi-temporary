@@ -9,10 +9,11 @@
         '$rootScope',
         '$cookies',
         '$state',
-        'NgTableParams'
+        'NgTableParams',
+        'tools'
     ];
 
-    function authorityManagementController($scope, $rootScope, $cookies, $state, NgTableParams) {
+    function authorityManagementController($scope, $rootScope, $cookies, $state, NgTableParams,tools) {
         $scope.vm = {};
         $scope.vm.menuList = [
             {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
@@ -41,6 +42,11 @@
         //删除子菜单
         $scope.vm.showDelChildMenu = function () {
             $('#deleteMenu').modal('show')
+            //确认删除
+            $scope.vm.sureDelete = function () {
+                tools.alertSuccess('删除成功')
+                $('#deleteMenu').modal('hide')
+            }
         }
     }
 })();
