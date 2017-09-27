@@ -43,7 +43,9 @@
                     'main.chen',
                     'main.authorityManagement',
                     'main.roleManagement',
-                    'main.userManagement'
+                    'main.userManagement',
+                    'main.dealManagement',
+                    'main.capitalManagement',
                 ]);
                 //如果在路由集合中找不到  输入的地址或者即将跳转的地址，那么就去主页
                 if (premissionArr.indexOf(toState.name) === -1) {

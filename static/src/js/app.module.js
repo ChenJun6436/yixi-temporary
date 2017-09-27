@@ -11,6 +11,7 @@
         'app.login',
         'app.chen',
         'app.jun',
-        'app.userManagement'
+        'app.userManagement',
+        'app.orderManagement'
     ]);
 })();

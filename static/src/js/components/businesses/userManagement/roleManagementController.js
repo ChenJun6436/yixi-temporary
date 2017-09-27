@@ -24,5 +24,32 @@
             { count: 100 },
             { dataset: $scope.vm.menuList}
         );
+        //编辑
+        $scope.vm.editorRole = function () {
+            $('#editorUser').modal('show')
+        }
+        //删除
+            $scope.vm.deleteRole = function () {
+            $('#deleteRole').modal('show')
+        }
+        //添加角色
+        $scope.vm.addRole = function () {
+            $('#addRole').modal('show')
+            //初始化开关
+            $('[name="status"]').bootstrapSwitch({
+                onText:"需要",
+                offText:"不需要",
+                onColor:"success",
+                offColor:"defult",
+                size:"small",
+                onSwitchChange:function(event,state){
+                    if(state==true){
+                        $(this).val("1");
+                    }else{
+                        $(this).val("2");
+                    }
+                }
+            })
+        }
     }
 })();

@@ -26,5 +26,21 @@
             { count: 100 },
             { dataset: $scope.vm.menuList}
         );
+        //添加菜单
+        $scope.vm.showAddMenu = function () {
+            $('#addMenu').modal('show')
+        }
+        //添加子菜单
+        $scope.vm.showAddChildMenu = function () {
+            $('#addMenu').modal('show')
+        }
+        //编辑子菜单
+        $scope.vm.showEdtChildMenu = function () {
+            $('#addMenu').modal('show')
+        }
+        //删除子菜单
+        $scope.vm.showDelChildMenu = function () {
+            $('#deleteMenu').modal('show')
+        }
     }
 })();

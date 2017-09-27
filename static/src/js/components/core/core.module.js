@@ -6,6 +6,6 @@
     angular.module('app.core', [
         'app.helper',
         'ngCookies',
-        'ngTable'
+        'ngTable',
     ]);
 })();

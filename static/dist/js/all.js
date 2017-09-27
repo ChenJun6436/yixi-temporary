@@ -13,7 +13,7 @@
     angular.module('app.core', [
         'app.helper',
         'ngCookies',
-        'ngTable'
+        'ngTable',
     ]);
 })();
 (function() {
@@ -36,11 +36,15 @@
 })();
 (function() {
     'use strict';
-    angular.module('app.userManagement', ['app.core']);
+    angular.module('app.login', ['app.core']);
 })();
 (function() {
     'use strict';
-    angular.module('app.login', ['app.core']);
+    angular.module('app.orderManagement', ['app.core']);
+})();
+(function() {
+    'use strict';
+    angular.module('app.userManagement', ['app.core']);
 })();
 /**
  * @Author: chenjun
@@ -55,7 +59,8 @@
         'app.login',
         'app.chen',
         'app.jun',
-        'app.userManagement'
+        'app.userManagement',
+        'app.orderManagement'
     ]);
 })();
 (function () {
@@ -303,154 +308,6 @@
 })();
 
 (function() {
-
-    'use strict';
-
-    angular.module('app.userManagement').run(appRun);
-
-    appRun.$inject = ['routerHelper'];
-
-    function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
-    }
-
-    function getStates() {
-        console.log('wo s chen Router')
-        return [{
-            state: 'main.authorityManagement',
-            config: {
-                url: '/authorityManagement',
-                views: {
-                    'section@main': {
-                        templateUrl: 'static/dist/tpls/components/businesses/userManagement/authorityManagement.html',
-                        controller: 'authorityManagementController'
-                    }
-                }
-            }
-        },{
-            state: 'main.roleManagement',
-            config: {
-                url: '/roleManagement',
-                views: {
-                    'section@main': {
-                        templateUrl: 'static/dist/tpls/components/businesses/userManagement/roleManagement.html',
-                        controller: 'roleManagementController'
-                    }
-                }
-            }
-        },{
-            state: 'main.userManagement',
-            config: {
-                url: '/userManagement',
-                views: {
-                    'section@main': {
-                        templateUrl: 'static/dist/tpls/components/businesses/userManagement/userManagement.html',
-                        controller: 'userManagementController'
-                    }
-                }
-            }
-        }];
-    }
-})();
-(function () {
-
-    'use strict';
-
-    angular.module('app.userManagement').controller('authorityManagementController', authorityManagementController);
-
-    authorityManagementController.$inject = [
-        '$scope',
-        '$rootScope',
-        '$cookies',
-        '$state',
-        'NgTableParams'
-    ];
-
-    function authorityManagementController($scope, $rootScope, $cookies, $state, NgTableParams) {
-        $scope.vm = {};
-        $scope.vm.menuList = [
-            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
-        ]
-        $scope.vm.tableParams = new NgTableParams(
-            { count: 100 },
-            { dataset: $scope.vm.menuList}
-        );
-    }
-})();
-(function () {
-
-    'use strict';
-
-    angular.module('app.userManagement').controller('roleManagementController', roleManagementController);
-
-    roleManagementController.$inject = [
-        '$scope',
-        '$rootScope',
-        '$cookies',
-        '$state',
-        'NgTableParams'
-    ];
-
-    function roleManagementController($scope, $rootScope, $cookies, $state, NgTableParams) {
-        $scope.vm = {};
-        $scope.vm.menuList = [
-            {'PK':1,'menuName':'超级管理员','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'一般管理员','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'一级代理','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'二级代理','parentName':'heihei','menuLevelName':'陈俊'},
-        ]
-        $scope.vm.tableParams = new NgTableParams(
-            { count: 100 },
-            { dataset: $scope.vm.menuList}
-        );
-    }
-})();
-(function () {
-
-    'use strict';
-
-    angular.module('app.userManagement').controller('userManagementController', userManagementController);
-
-    userManagementController.$inject = [
-        '$scope',
-        '$rootScope',
-        '$cookies',
-        '$state',
-        'NgTableParams'
-    ];
-
-    function userManagementController($scope, $rootScope, $cookies, $state, NgTableParams) {
-        $scope.vm = {};
-        //初始化时间插件
-        laydate.render({
-            elem: '#startTime', //指定元素
-            range: '~',
-            theme: '#524f4f'
-        });
-        $scope.vm.menuList = [
-            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
-            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
-        ]
-        $scope.vm.tableParams = new NgTableParams(
-            { count: 100 },
-            { dataset: $scope.vm.menuList}
-        );
-        $scope.vm.showUserAuthentification = function () {
-            console.log(1)
-            $('#userAuthentification').modal('show')
-        }
-    }
-})();
-(function() {
     'use strict';
     angular.module('app.login').run(appRun);
     appRun.$inject = ['routerHelper'];
@@ -531,6 +388,385 @@
             //     }
             // })
         // };
+    }
+})();
+(function () {
+
+    'use strict';
+
+    angular.module('app.orderManagement').controller('capitalManagementController', capitalManagementController);
+
+    capitalManagementController.$inject = [
+        '$scope',
+        '$rootScope',
+        '$cookies',
+        '$state',
+        'NgTableParams'
+    ];
+
+    function capitalManagementController($scope, $rootScope, $cookies, $state, NgTableParams) {
+        $scope.vm = {};
+        $scope.vm.menuList = [
+            {'PK':1,'menuName':'超级管理员','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'一般管理员','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'一级代理','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'二级代理','parentName':'heihei','menuLevelName':'陈俊'},
+        ]
+        $scope.vm.tableParams = new NgTableParams(
+            { count: 100 },
+            { dataset: $scope.vm.menuList}
+        );
+        //初始化时间
+        laydate.render({
+            elem: '#startTime', //指定元素
+            range: '~',
+            theme: '#524f4f'
+        });
+    }
+})();
+(function () {
+
+    'use strict';
+
+    angular.module('app.orderManagement').controller('dealManagementController', dealManagementController);
+
+    dealManagementController.$inject = [
+        '$scope',
+        '$rootScope',
+        '$cookies',
+        '$state',
+        'NgTableParams'
+    ];
+
+    function dealManagementController($scope, $rootScope, $cookies, $state, NgTableParams) {
+        $scope.vm = {};
+        $scope.vm.menuList = [
+            {'PK':1,'menuName':'超级管理员','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'一般管理员','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'一级代理','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'二级代理','parentName':'heihei','menuLevelName':'陈俊'},
+        ]
+        $scope.vm.tableParams = new NgTableParams(
+            { count: 100 },
+            { dataset: $scope.vm.menuList}
+        );
+        //初始化时间
+        //初始化时间
+        laydate.render({
+            elem: '#startTime', //指定元素
+            range: '~',
+            theme: '#524f4f'
+        });
+        laydate.render({
+            elem: '#completeTime', //指定元素
+            range: '~',
+            theme: '#524f4f'
+        });
+    }
+})();
+(function() {
+
+    'use strict';
+
+    angular.module('app.orderManagement').run(appRun);
+
+    appRun.$inject = ['routerHelper'];
+
+    function appRun(routerHelper) {
+        routerHelper.configureStates(getStates());
+    }
+
+    function getStates() {
+        console.log('wo s chen Router')
+        return [{
+            state: 'main.capitalManagement',
+            config: {
+                url: '/capitalManagement',
+                views: {
+                    'section@main': {
+                        templateUrl: 'static/dist/tpls/components/businesses/orderManagement/capitalManagement.html',
+                        controller: 'capitalManagementController'
+                    }
+                }
+            }
+        },{
+            state: 'main.dealManagement',
+            config: {
+                url: '/dealManagement',
+                views: {
+                    'section@main': {
+                        templateUrl: 'static/dist/tpls/components/businesses/orderManagement/dealManagement.html',
+                        controller: 'dealManagementController'
+                    }
+                }
+            }
+        }];
+    }
+})();
+(function () {
+
+    'use strict';
+
+    angular.module('app.userManagement').controller('authorityManagementController', authorityManagementController);
+
+    authorityManagementController.$inject = [
+        '$scope',
+        '$rootScope',
+        '$cookies',
+        '$state',
+        'NgTableParams'
+    ];
+
+    function authorityManagementController($scope, $rootScope, $cookies, $state, NgTableParams) {
+        $scope.vm = {};
+        $scope.vm.menuList = [
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+        ]
+        $scope.vm.tableParams = new NgTableParams(
+            { count: 100 },
+            { dataset: $scope.vm.menuList}
+        );
+        //添加菜单
+        $scope.vm.showAddMenu = function () {
+            $('#addMenu').modal('show')
+        }
+        //添加子菜单
+        $scope.vm.showAddChildMenu = function () {
+            $('#addMenu').modal('show')
+        }
+        //编辑子菜单
+        $scope.vm.showEdtChildMenu = function () {
+            $('#addMenu').modal('show')
+        }
+        //删除子菜单
+        $scope.vm.showDelChildMenu = function () {
+            $('#deleteMenu').modal('show')
+        }
+    }
+})();
+(function () {
+
+    'use strict';
+
+    angular.module('app.userManagement').controller('roleManagementController', roleManagementController);
+
+    roleManagementController.$inject = [
+        '$scope',
+        '$rootScope',
+        '$cookies',
+        '$state',
+        'NgTableParams'
+    ];
+
+    function roleManagementController($scope, $rootScope, $cookies, $state, NgTableParams) {
+        $scope.vm = {};
+        $scope.vm.menuList = [
+            {'PK':1,'menuName':'超级管理员','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'一般管理员','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'一级代理','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'二级代理','parentName':'heihei','menuLevelName':'陈俊'},
+        ]
+        $scope.vm.tableParams = new NgTableParams(
+            { count: 100 },
+            { dataset: $scope.vm.menuList}
+        );
+        //编辑
+        $scope.vm.editorRole = function () {
+            $('#editorUser').modal('show')
+        }
+        //删除
+            $scope.vm.deleteRole = function () {
+            $('#deleteRole').modal('show')
+        }
+        //添加角色
+        $scope.vm.addRole = function () {
+            $('#addRole').modal('show')
+            //初始化开关
+            $('[name="status"]').bootstrapSwitch({
+                onText:"需要",
+                offText:"不需要",
+                onColor:"success",
+                offColor:"defult",
+                size:"small",
+                onSwitchChange:function(event,state){
+                    if(state==true){
+                        $(this).val("1");
+                    }else{
+                        $(this).val("2");
+                    }
+                }
+            })
+        }
+    }
+})();
+(function() {
+
+    'use strict';
+
+    angular.module('app.userManagement').run(appRun);
+
+    appRun.$inject = ['routerHelper'];
+
+    function appRun(routerHelper) {
+        routerHelper.configureStates(getStates());
+    }
+
+    function getStates() {
+        return [{
+            state: 'main.authorityManagement',
+            config: {
+                url: '/authorityManagement',
+                views: {
+                    'section@main': {
+                        templateUrl: 'static/dist/tpls/components/businesses/userManagement/authorityManagement.html',
+                        controller: 'authorityManagementController'
+                    }
+                }
+            }
+        },{
+            state: 'main.roleManagement',
+            config: {
+                url: '/roleManagement',
+                views: {
+                    'section@main': {
+                        templateUrl: 'static/dist/tpls/components/businesses/userManagement/roleManagement.html',
+                        controller: 'roleManagementController'
+                    }
+                }
+            }
+        },{
+            state: 'main.userManagement',
+            config: {
+                url: '/userManagement',
+                views: {
+                    'section@main': {
+                        templateUrl: 'static/dist/tpls/components/businesses/userManagement/userManagement.html',
+                        controller: 'userManagementController'
+                    }
+                }
+            }
+        }];
+    }
+})();
+(function () {
+
+    'use strict';
+
+    angular.module('app.userManagement').controller('userManagementController', userManagementController);
+
+    userManagementController.$inject = [
+        '$scope',
+        '$rootScope',
+        '$cookies',
+        '$state',
+        'NgTableParams',
+        '$timeout'
+    ];
+
+    function userManagementController($scope, $rootScope, $cookies, $state, NgTableParams, $timeout) {
+        $scope.vm = {};
+        //初始化时间插件
+        laydate.render({
+            elem: '#startTime', //指定元素udate
+            range: '~',
+            theme: '#524f4f'
+        });
+        $scope.vm.menuList = [
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+            {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
+        ]
+        $scope.vm.tableParams = new NgTableParams(
+            { count: 100 },
+            { dataset: $scope.vm.menuList}
+        );
+        $scope.vm.tableParams2 = new NgTableParams(
+            { count: 100 },
+            { dataset: $scope.vm.menuList}
+        );
+        //查看认证
+        $scope.vm.showUserAuthentification = function () {
+            $('#userAuthentification').modal('show')
+        }
+        //查看账户总额
+        $scope.vm.showUserTotalAmount = function () {
+            $('#userTotalAmount').modal('show')
+        }
+        //增加金额
+        $scope.vm.showAddAmount = function () {
+            $('#addUserTotalAmount').modal('show')
+        }
+        //冻结金额
+        $scope.vm.showFrostAmount = function () {
+            $('#frostUserTotalAmount').modal('show')
+        }
+        //提现-->
+        $scope.vm.showCaseUser = function () {
+            $('#caseUser').modal('show')
+        }
+        //通道-->AisleUser
+        $scope.vm.showAisleUser = function () {
+            $('#aisleUser').modal('show')
+        }
+        //费率-->RateUser
+        $scope.vm.showRateUser = function () {
+            $('#rateUser').modal('show')
+        }
+        //密码-->PasswordUser
+        $scope.vm.showPasswordUser = function () {
+            $('#passwordUser').modal('show')
+        }
+        //编辑-->EditorUser
+        $scope.vm.showEditorUser = function () {
+            $('#editorUser').modal('show')
+            //初始化时间插件
+            laydate.render({
+                elem: '#udate', //指定元素
+                theme: '#524f4f'
+            });
+        }
+        //删除-->DeleteUser
+        $scope.vm.showDeleteUser = function () {
+            $('#deleteUser').modal('show')
+        }
+        //初始化开关
+        $timeout(function(){
+            $('[name="status"]').bootstrapSwitch({
+                onText:"正常",
+                offText:"禁用",
+                onColor:"success",
+                offColor:"defult",
+                size:"small",
+                onSwitchChange:function(event,state){
+                    if(state==true){
+                        $(this).val("1");
+                    }else{
+                        $(this).val("2");
+                    }
+                }
+            })
+            $('[name="apiStatus"]').bootstrapSwitch({
+                onText:"开启",
+                offText:"关闭",
+                onColor:"success",
+                offColor:"defult",
+                size:"small",
+                onSwitchChange:function(event,state){
+                    if(state==true){
+                        $(this).val("1");
+                    }else{
+                        $(this).val("2");
+                    }
+                }
+            })
+        },500);
+
     }
 })();
 /**
@@ -730,6 +966,17 @@
  * @Date:   2017-09-21
  */
 (function () {
+    'use strict';
+    /**
+     * 常量
+     */
+    angular.module('app.core').constant('ROOT', '');
+})();
+/**
+ * @Author: chenjun
+ * @Date:   2017-09-21
+ */
+(function () {
     /**
      * 助学金辅导员服务
      */
@@ -751,17 +998,6 @@
     }
 })();
 
-/**
- * @Author: chenjun
- * @Date:   2017-09-21
- */
-(function () {
-    'use strict';
-    /**
-     * 常量
-     */
-    angular.module('app.core').constant('ROOT', '');
-})();
 /**
  * @Author: chenjun
  * @Date:   2017-09-21
@@ -987,7 +1223,9 @@
                     'main.chen',
                     'main.authorityManagement',
                     'main.roleManagement',
-                    'main.userManagement'
+                    'main.userManagement',
+                    'main.dealManagement',
+                    'main.capitalManagement',
                 ]);
                 //如果在路由集合中找不到  输入的地址或者即将跳转的地址，那么就去主页
                 if (premissionArr.indexOf(toState.name) === -1) {
