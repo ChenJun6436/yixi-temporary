@@ -7,5 +7,6 @@
     /**
      * 常量
      */
-    angular.module('app.core').constant('ROOT', '');
+    //192.168.2.12/message/push
+    angular.module('app.core').constant('ROOT', 'http://192.168.2.19:20000');
 })();

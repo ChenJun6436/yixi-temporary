@@ -18,7 +18,11 @@
                         url: ROOT + url,
                         data: data,
                         timeout: deferred.promise,
-                        cancel: deferred
+                        cancel: deferred,
+                        // headers: {
+                        //     'Content-Type': 'application/json;charset=UTF-8'
+                        //     'Content-Type': 'application/x-www-form-urlencoded'
+                        // }
                     }).then(function (resp) {
                         deferred.resolve(resp.data);
                     },function (resp) {
@@ -71,7 +75,8 @@
             get: function (url, data) {
 
                 var _pramas = '';
-
+                console.log(data)
+                console.log(url)
                 if(data || data === 0){
                     if (angular.isArray(data)){
                         angular.forEach(data, function (value){
@@ -85,7 +90,10 @@
                 var deferred = $q.defer();
                 $http.get(ROOT + url + ( _pramas !== '' ? _pramas : ''), {
                     timeout: deferred.promise,
-                    cancel: deferred
+                    cancel: deferred,
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    }
                 }).then(function (resp) {
                     deferred.resolve(resp.data);
                 }, function (resp) {

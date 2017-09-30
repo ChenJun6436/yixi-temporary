@@ -10,10 +10,11 @@
         '$cookies',
         '$state',
         'NgTableParams',
-        '$timeout'
+        '$timeout',
+        'userManagementServer'
     ];
 
-    function userManagementController($scope, $rootScope, $cookies, $state, NgTableParams, $timeout) {
+    function userManagementController($scope, $rootScope, $cookies, $state, NgTableParams, $timeout, userManagementServer) {
         $scope.vm = {};
         //初始化时间插件
         laydate.render({
@@ -21,16 +22,62 @@
             range: '~',
             theme: '#524f4f'
         });
+
+        //获取用户管理列表
+        userManagementServer.user_GetUsers().then(function (data) {
+            $scope.vm.userList = data.content;
+            $scope.vm.tableParams = new NgTableParams(
+                { count: 100 },
+                { dataset: $scope.vm.userList}
+            );
+            //初始化开关
+            $timeout(function(){
+                $('[name="status"]').bootstrapSwitch({
+                    onText:"正常",
+                    offText:"禁用",
+                    onColor:"success",
+                    offColor:"defult",
+                    size:"small",
+                    onSwitchChange:function(event,state){
+                        if(state==true){
+                            $(this).val("0");
+                        }else{
+                            $(this).val("1");
+                        }
+                    }
+                })
+
+                $('[name="apiStatus"]').bootstrapSwitch({
+                    onText:"开启",
+                    offText:"关闭",
+                    onColor:"success",
+                    offColor:"warning",
+                    size:"small",
+                    onSwitchChange:function(event,state){
+                        if(state==true){
+                            $(this).val("0");
+                            console.log($scope.vm)
+                        }else{
+                            $(this).val("1");
+                            console.log($scope.vm)
+                        }
+                    }
+                })
+            },500);
+        })
+        $scope.vm.changeStatus = function (_this) {
+            console.log(_this)
+            if(_this.locked === 0){
+
+            }
+        }
         $scope.vm.menuList = [
             {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
             {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
             {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
             {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
         ]
-        $scope.vm.tableParams = new NgTableParams(
-            { count: 100 },
-            { dataset: $scope.vm.menuList}
-        );
+
         $scope.vm.tableParams2 = new NgTableParams(
             { count: 100 },
             { dataset: $scope.vm.menuList}
@@ -80,37 +127,7 @@
         $scope.vm.showDeleteUser = function () {
             $('#deleteUser').modal('show')
         }
-        //初始化开关
-        $timeout(function(){
-            $('[name="status"]').bootstrapSwitch({
-                onText:"正常",
-                offText:"禁用",
-                onColor:"success",
-                offColor:"defult",
-                size:"small",
-                onSwitchChange:function(event,state){
-                    if(state==true){
-                        $(this).val("1");
-                    }else{
-                        $(this).val("2");
-                    }
-                }
-            })
-            $('[name="apiStatus"]').bootstrapSwitch({
-                onText:"开启",
-                offText:"关闭",
-                onColor:"success",
-                offColor:"defult",
-                size:"small",
-                onSwitchChange:function(event,state){
-                    if(state==true){
-                        $(this).val("1");
-                    }else{
-                        $(this).val("2");
-                    }
-                }
-            })
-        },500);
+
 
     }
 })();

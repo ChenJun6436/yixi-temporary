@@ -7,8 +7,8 @@
                 <button class="dropdown-toggle btn h50 fs16 asideListFirst"
                     data-toggle="dropdown" href="javaScript:;" role="button" aria-haspopup="true" aria-expanded="false"
                         ng-class="{asideListActive: $index===vm.chooseFirstOne}"
-                    ng-click="vm.chooseFirst($index)">
-                    {{first}} <span class="caret"></span>
+                    ng-click="vm.getSecondtList(first)">
+                    {{first.menuName}} <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu asideListSecondUl"  aria-labelledby="dLabel">
                     <li ng-repeat="second in vm.userListSecond" class="asideListSecond"><a href="javaScript:;" ng-click="vm.pushNavList(second)">{{second}}</a></li>
