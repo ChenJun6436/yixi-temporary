@@ -36,7 +36,7 @@
                     onText:"正常",
                     offText:"禁用",
                     onColor:"success",
-                    offColor:"defult",
+                    offColor:"warning",
                     size:"small",
                     onSwitchChange:function(event,state){
                         if(state==true){

@@ -15,7 +15,7 @@
         var myServices = {};
         //获取一级菜单
         myServices.user_GetUsers = function (data) {
-            return httpServer.get('/users', data);
+            return httpServer.postHttp('/users', data);
         };
         //
 

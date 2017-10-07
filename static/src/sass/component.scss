@@ -175,6 +175,7 @@
 //.ng-table-counts{
 //	display: none;
 //}
+
 .btn-group{
 	display: none;
 }
@@ -291,6 +292,9 @@ option[value="?"]{
 	color: #999;
 	background: transparent!important;
 	cursor: default
+}
+.ng-table-pager{
+	display: none;
 }
 .m0{
 	margin: 0;

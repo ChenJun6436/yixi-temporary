@@ -24,7 +24,7 @@
             {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
         ]
         $scope.vm.tableParams = new NgTableParams(
-            { count: 100 },
+            { count: 10 },
             { dataset: $scope.vm.menuList}
         );
         //添加菜单

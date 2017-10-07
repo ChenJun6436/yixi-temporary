@@ -32,23 +32,23 @@
         </div>
         <table ng-table="vm.tableParams" class="table table-hover">
             <tr ng-repeat="a in $data">
-                <td title="'#'" >{{a.id}}</td>
-                <td title="'商户号'" >{{a.merchantNo}}</td>
-                <td title="'用户号'" >{{a.userName}}</td>
+                <td title="'#'"  sortable="'id'">{{a.id}}</td>
+                <td title="'商户号'" sortable="'merchantNo'">{{a.merchantNo}}</td>
+                <td title="'用户名'" >{{a.userName}}</td>
                 <td title="'手机'" >{{a.mobile}}</td>
                 <td title="'Email'" >{{a.email}}</td>
                 <td title="'QQ'" >{{a.contactQq}}</td>
                 <td title="'状态'" style="padding: 0" >
                     <input name="status" type="checkbox" data-size="small" ng-checked="a.locked===0">
                 <td title="'认证'">
-                    <span class="label  ml5 cursor-pointer fwN"  ng-class=" a.openState===0 ?'label-success':'label-warning'"
+                    <span class="label  ml5 cursor-pointer fwN"  ng-class=" a.locked===0 ?'label-success':'label-warning'"
                           ng-click="vm.showUserAuthentification()">
-                        <span ng-if="a.openState===0">已认证</span>
-                        <span ng-if="a.openState===1">未认证</span>
+                        <span ng-if="a.locked=== 0">已认证</span>
+                        <span ng-if="a.locked=== 1">未认证</span>
                     </span>
                 </td>
-                <td title="'账户总额'" >
-                    <span class="label label-success ml5 cursor-pointer fwN" ng-click="vm.showUserTotalAmount()">{{a.menuLevelName}}</span>
+                <td title="'账户总额'" sortable="'sumAnctualAmt'">
+                    <span class="label label-success ml5 cursor-pointer fwN" ng-click="vm.showUserTotalAmount()">{{a.sumAnctualAmt}}</span>
                 </td>
                 <td title="'注册时间'" >{{a.createTime | date:'yyyy-MM-dd hh:mm:ss'}}</td>
                 <td title="'操作'" >

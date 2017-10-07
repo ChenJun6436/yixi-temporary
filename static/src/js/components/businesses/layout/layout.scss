@@ -5,6 +5,7 @@
     .my-nav{
       height: 50px;
       border-bottom: 5px solid;
+      box-sizing: content-box;
       .nav-list{
         width: 80%;
         margin-top: 0px;

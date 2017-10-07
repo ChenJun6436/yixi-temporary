@@ -24,6 +24,10 @@
     'use strict';
     angular.module('app.jun', ['app.core']);
 })();
+(function() {
+    'use strict';
+    angular.module('app.login', ['app.core']);
+})();
 /**
  * @Author: chenjun
  * @Date:   2017-09-21
@@ -33,10 +37,6 @@
 
     angular.module('app.layout', ['app.core']);
 
-})();
-(function() {
-    'use strict';
-    angular.module('app.login', ['app.core']);
 })();
 (function() {
     'use strict';
@@ -93,44 +93,6 @@
         }
     }
 })();
-angular.module('app.core').directive('alertDelete',function(){
-    return {
-        restrict :"E",
-        //1: 指令形式，（E以元素存在）
-        scope:{sureDelete:'&sureDelete'},  //5:传入数据，模板上的变量名：“=指令上的属性名”；
-        template :
-        '<div class="modal fade modal-open" id="deleteMenu" tabindex="-1" role="dialog" aria-labelledby="addGrantsModal" style="top:50%;margin-top: -200px;height: 202px;overflow-y:hidden;">'+
-            '<div class="modal-dialog" style="width:450px;" role="document">'+
-                '<div class="modal-content">'+
-                    '<div class="modal-header h50">'+
-                        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><spanaria-hidden="true">&times;</span></button>'+
-                            '<h4 class="modal-title fs16 lh30" id="addGrantsModal">确认删除{{x}}</h4>'+
-                        '</div>'+
-                    '<div class="modal-body">'+
-                        '<p>确定要删除吗？</p>'+
-                        '<div class="text-center mt30">'+
-                            '<button class="btn btn-primary" ng-click="sureDelete()">确定</button>'+
-                            '<button type="button" class="btn btn-default ml10" data-dismiss="modal" aria-label="Close">取消</button>'+
-                        '</div>'+
-                    '</div>'+
-                '</div>'+
-            '</div>'+
-        '</div>'
-        ,
-        replace:true,
-        //3： 是否替换掉自定指令元素
-        transclude:true,
-        //4： 处理指令里面的dom显示在哪里的，是否需要在
-        link:function(scope, element, attrs){
-            //自己用一个controller
-
-        }
-    }
-});
-/**
- * Created by Administrator on 2017/9/27 0027.
- */
-
 (function() {
 
     'use strict';
@@ -214,161 +176,6 @@ angular.module('app.core').directive('alertDelete',function(){
         console.log($rootScope.userRole);
     }
 })();
-/**
- * @Author: chenjun
- * @Date:   2017-09-21
- */
-(function () {
-    'use strict';
-    angular.module('app.layout').controller('asideController', asideController);
-
-    asideController.$inject = [
-        '$scope',
-        '$rootScope',
-        '$cookies',
-        '$state',
-        'commonServer'
-    ];
-    function asideController($scope, $rootScope, $cookies, $state, commonServer) {
-        $scope.vm = {}
-        $scope.state = $state
-        //获取用户操作菜单
-        $scope.vm.getUserList = function () {
-            //发送请求
-            $scope.vm.userListSecond = ['基本设置','邮件设置','系统更新']
-            $scope.vm.navList = ['基本设置','111']
-            $scope.vm.nowChooseNav = 0
-        }
-        //获取一级菜单
-        $scope.vm.getFirstList = function () {
-            $scope.vm.postA = {
-                menuLevel:1,
-                userId:1
-            }
-            commonServer.getMenus($scope.vm.postA).then(function (data) {
-                console.log(data)
-                $scope.vm.userListFirst = data.content;
-            })
-        }
-        $scope.vm.getFirstList()
-        //获取二级菜单
-        $scope.vm.getSecondtList = function (first) {
-            $scope.vm.postB = {
-                menuLevel:2,
-                userId:1,
-                parentId: first.id
-            }
-            commonServer.getMenus($scope.vm.postB).then(function (data) {
-                console.log(data)
-                // $scope.vm.userListFirst = data.content;
-            })
-        }
-
-        // 显示 导航栏点击显示
-        $scope.vm.chooseFirst = function (_index) {
-            $scope.vm.chooseFirstOne = _index
-        }
-        // 显示 历史记录显示
-        $scope.vm.chooseNav = function (_index) {
-            $scope.vm.nowChooseNav = _index
-        }
-        // 历史Nav添加
-        $scope.vm.pushNavList = function (navName) {
-            if($scope.vm.navList.indexOf(navName)=== -1){
-                $scope.vm.navList.push(navName)
-            }else {
-                console.log(navName)
-            }
-        }
-        // 历史Nav删除
-        $scope.vm.delNavList = function (_index) {
-            $scope.vm.navList.splice(_index,1)
-            if($scope.vm.navList.length === 0){
-                $scope.vm.navList.push('默认页面')
-            }
-        }
-        //vm.delNowChoose()">关闭当前选项卡
-        $scope.vm.delNowChoose = function () {
-            $scope.vm.navList.splice($scope.vm.nowChooseNav,1)
-            if($scope.vm.navList.length === 0){
-                $scope.vm.navList.push('默认页面')
-            }
-        }
-        //vm.delAllChoose()">关闭全部选项卡
-        $scope.vm.delAllChoose = function () {
-            $scope.vm.navList = []
-            $scope.vm.navList.push('默认页面')
-        }
-        //vm.delOtherChoose()">关闭其他选项卡
-        $scope.vm.delOtherChoose = function () {
-            $scope.vm.navList = [$scope.vm.navList[$scope.vm.nowChooseNav]]
-        }
-    }
-})();
-
-/**
- * @Author: chenjun
- * @Date:   2017-09-21
- */
-
-(function () {
-    'use strict';
-    angular.module('app.layout').controller('headerController', headerController);
-
-    headerController.$inject = ['$state', '$rootScope'];
-
-    function headerController($state, $rootScope) {
-        console.log('w s  header');
-    }
-})();
-
-/**
- * @Author: chenjun
- * @Date:   2017-09-21
- */
-(function () {
-    'use strict';
-
-    angular.module('app.layout').run(appRun);
-
-    appRun.$inject = ['routerHelper'];
-
-    function appRun(routerHelper) {
-        var otherwise = '/login';
-        routerHelper.configureStates(getStates(), otherwise);
-    }
-
-    function getStates() {
-        return [
-            {
-                state: 'main',
-                config: {
-                    url: '/main',
-                    views: {
-                        '': {
-                            templateUrl: 'static/dist/tpls/components/businesses/layout/main.html'
-                        },
-                        'header@main': {
-                            templateUrl: 'static/dist/tpls/components/businesses/layout/header.html',
-                            controller: 'headerController'
-                        },
-                        'aside@main': {
-                            templateUrl: 'static/dist/tpls/components/businesses/layout/aside.html',
-                            controller: 'asideController'
-                        },
-                        'section@main': {
-                            controller: ['$state', '$rootScope', function ($state, $rootScope) {
-                                //根据角色不同判断默认显示的初始化页面
-
-                            }]
-                        }
-                    }
-                }
-            }
-        ];
-    }
-})();
-
 (function() {
     'use strict';
     angular.module('app.login').run(appRun);
@@ -452,6 +259,188 @@ angular.module('app.core').directive('alertDelete',function(){
         // };
     }
 })();
+/**
+ * @Author: chenjun
+ * @Date:   2017-09-21
+ */
+(function () {
+    'use strict';
+    angular.module('app.layout').controller('asideController', asideController);
+
+    asideController.$inject = [
+        '$scope',
+        '$rootScope',
+        '$cookies',
+        '$state',
+        'commonServer'
+    ];
+    function asideController($scope, $rootScope, $cookies, $state, commonServer) {
+        $scope.vm = {
+            user1:'hhh'
+        }
+        $scope.state = $state
+        //获取用户操作菜单
+        $scope.vm.getUserList = function () {
+            //发送请求
+            $scope.vm.userListSecond = ['基本设置','邮件设置','系统更新']
+            $scope.vm.navList = ['默认页面','邮件设置2','系统更新4','基本设置5','邮件设置6','系统更新7','基本设置8','邮件设置9','系统更新10','基本设置11','邮件设置12','系统更新13']
+            $scope.vm.navList = []
+            $scope.vm.nowChooseNav = 0
+        }
+        $scope.vm.getUserList()
+        //获取一级菜单
+        $scope.vm.getFirstList = function () {
+            $scope.vm.postA = {
+                menuLevel:1,
+                userId:1
+            }
+            commonServer.getMenus($scope.vm.postA).then(function (data) {
+                $scope.vm.userListFirst = data.content;
+            })
+        }
+        $scope.vm.getFirstList()
+        //获取二级菜单
+        $scope.vm.getSecondtList = function (first) {
+            $scope.vm.postB = {
+                menuLevel:2,
+                userId:1,
+                parentId: first.menuId
+            }
+            commonServer.getMenus($scope.vm.postB).then(function (data) {
+                console.log(data)
+                $scope.vm.userListSecond = data.content;
+            })
+        }
+
+        // // 显示 导航栏点击显示
+        // $scope.vm.chooseFirst = function (_index) {
+        //     $scope.vm.chooseFirstOne = _index
+        // }
+        // 显示 历史记录显示
+        $scope.vm.chooseNav = function (_index,onenav) {
+            $scope.vm.nowChooseNav = _index
+        }
+        // 历史Nav添加
+        $scope.vm.pushNavList = function (second) {
+            console.log($scope.vm.navList.length)
+            if($scope.vm.navList.length === 0){
+                $scope.vm.navList.push(second)
+            }else {
+                angular.forEach($scope.vm.navList,function (a) {
+                    console.log(a.menuId +'_______________'+second.menuId)
+                    if(a.menuId === second.menuId){
+                        $scope.vm.can = true
+                    }
+                })
+                if(!$scope.vm.can){
+                    $scope.vm.navList.push(second)
+                }
+            }
+        }
+        // 历史Nav删除
+        $scope.vm.delNavList = function (_index) {
+            $scope.vm.navList.splice(_index,1)
+            if($scope.vm.navList.length === 0){
+                $scope.vm.navList.push('默认页面')
+            }
+        }
+        //vm.delNowChoose()">关闭当前选项卡
+        $scope.vm.delNowChoose = function () {
+            $scope.vm.navList.splice($scope.vm.nowChooseNav,1)
+            if($scope.vm.navList.length === 0){
+                $scope.vm.navList.push('默认页面')
+            }
+        }
+        //vm.delAllChoose()">关闭全部选项卡
+        $scope.vm.delAllChoose = function () {
+            $scope.vm.navList = []
+            $scope.vm.navList.push('默认页面')
+        }
+        //vm.delOtherChoose()">关闭其他选项卡
+        $scope.vm.delOtherChoose = function () {
+            $scope.vm.navList = [$scope.vm.navList[$scope.vm.nowChooseNav]]
+        }
+        //下一页
+        var nowNum = 0;
+        $scope.vm.next = function () {
+            if(nowNum < $scope.vm.navList.length/3-1){
+                nowNum++;
+                $scope.vm.leftPx = "-"+ 330*nowNum +"px";
+            }
+        }
+        //上一页
+        $scope.vm.pre = function () {
+            if(nowNum >0){
+                nowNum--;
+                $scope.vm.leftPx = "-"+ 330*nowNum +"px";
+            }
+        }
+    }
+})();
+
+/**
+ * @Author: chenjun
+ * @Date:   2017-09-21
+ */
+
+(function () {
+    'use strict';
+    angular.module('app.layout').controller('headerController', headerController);
+
+    headerController.$inject = ['$state', '$rootScope'];
+
+    function headerController($state, $rootScope) {
+        console.log('w s  header');
+    }
+})();
+
+/**
+ * @Author: chenjun
+ * @Date:   2017-09-21
+ */
+(function () {
+    'use strict';
+
+    angular.module('app.layout').run(appRun);
+
+    appRun.$inject = ['routerHelper'];
+
+    function appRun(routerHelper) {
+        var otherwise = '/login';
+        routerHelper.configureStates(getStates(), otherwise);
+    }
+
+    function getStates() {
+        return [
+            {
+                state: 'main',
+                config: {
+                    url: '/main',
+                    views: {
+                        '': {
+                            templateUrl: 'static/dist/tpls/components/businesses/layout/main.html'
+                        },
+                        'header@main': {
+                            templateUrl: 'static/dist/tpls/components/businesses/layout/header.html',
+                            controller: 'headerController'
+                        },
+                        'aside@main': {
+                            templateUrl: 'static/dist/tpls/components/businesses/layout/aside.html',
+                            controller: 'asideController'
+                        },
+                        'section@main': {
+                            controller: ['$state', '$rootScope', function ($state, $rootScope) {
+                                //根据角色不同判断默认显示的初始化页面
+
+                            }]
+                        }
+                    }
+                }
+            }
+        ];
+    }
+})();
+
 (function () {
 
     'use strict';
@@ -591,7 +580,7 @@ angular.module('app.core').directive('alertDelete',function(){
             {'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},{'PK':1,'menuName':'haha','parentName':'heihei','menuLevelName':'陈俊'},
         ]
         $scope.vm.tableParams = new NgTableParams(
-            { count: 100 },
+            { count: 10 },
             { dataset: $scope.vm.menuList}
         );
         //添加菜单
@@ -759,7 +748,7 @@ angular.module('app.core').directive('alertDelete',function(){
                     onText:"正常",
                     offText:"禁用",
                     onColor:"success",
-                    offColor:"defult",
+                    offColor:"warning",
                     size:"small",
                     onSwitchChange:function(event,state){
                         if(state==true){
@@ -854,6 +843,44 @@ angular.module('app.core').directive('alertDelete',function(){
 
     }
 })();
+angular.module('app.core').directive('alertDelete',function(){
+    return {
+        restrict :"E",
+        //1: 指令形式，（E以元素存在）
+        scope:{sureDelete:'&sureDelete'},  //5:传入数据，模板上的变量名：“=指令上的属性名”；
+        template :
+        '<div class="modal fade modal-open" id="deleteMenu" tabindex="-1" role="dialog" aria-labelledby="addGrantsModal" style="top:50%;margin-top: -200px;height: 202px;overflow-y:hidden;">'+
+            '<div class="modal-dialog" style="width:450px;" role="document">'+
+                '<div class="modal-content">'+
+                    '<div class="modal-header h50">'+
+                        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><spanaria-hidden="true">&times;</span></button>'+
+                            '<h4 class="modal-title fs16 lh30" id="addGrantsModal">确认删除{{x}}</h4>'+
+                        '</div>'+
+                    '<div class="modal-body">'+
+                        '<p>确定要删除吗？</p>'+
+                        '<div class="text-center mt30">'+
+                            '<button class="btn btn-primary" ng-click="sureDelete()">确定</button>'+
+                            '<button type="button" class="btn btn-default ml10" data-dismiss="modal" aria-label="Close">取消</button>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+        '</div>'
+        ,
+        replace:true,
+        //3： 是否替换掉自定指令元素
+        transclude:true,
+        //4： 处理指令里面的dom显示在哪里的，是否需要在
+        link:function(scope, element, attrs){
+            //自己用一个controller
+
+        }
+    }
+});
+/**
+ * Created by Administrator on 2017/9/27 0027.
+ */
+
 /**
  * @Author: chenjun
  * @Date:   2017-09-21
@@ -1139,7 +1166,7 @@ angular.module('app.core').directive('alertDelete',function(){
         var myServices = {};
         //获取一级菜单
         myServices.user_GetUsers = function (data) {
-            return httpServer.get('/users', data);
+            return httpServer.postHttp('/users', data);
         };
         //
 
